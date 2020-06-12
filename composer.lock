@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5ac7407dc851b5e4eb9c002f1ba28c68",
+    "content-hash": "deb3fc7b47b112684d8fa4576ea2b265",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -1466,6 +1466,75 @@
                 "uuid"
             ],
             "time": "2020-02-21T04:36:14+00:00"
+        },
+        {
+            "name": "rcwebdevelopers/mustangbuilder",
+            "version": "v0.2.0",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:roanokecollege/mustang_builder.git",
+                "reference": "3c6ca90d797034e78a006c20d9b2770127fa45cc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/roanokecollege/mustang_builder/zipball/3c6ca90d797034e78a006c20d9b2770127fa45cc",
+                "reference": "3c6ca90d797034e78a006c20d9b2770127fa45cc",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "rcwebdevelopers\\": "src/"
+                }
+            },
+            "authors": [
+                {
+                    "name": "Scotty Smith",
+                    "email": "chssmith@roanoke.edu"
+                }
+            ],
+            "description": "A package for dynamic generation of various elements from the Mustang template",
+            "support": {
+                "source": "https://github.com/roanokecollege/mustang_builder/tree/v0.2.0",
+                "issues": "https://github.com/roanokecollege/mustang_builder/issues"
+            },
+            "time": "2020-05-20T19:07:32+00:00"
+        },
+        {
+            "name": "roanokecollege/authentication",
+            "version": "v0.4.0",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:roanokecollege/authentication.git",
+                "reference": "ee6b0117921191480f174a1c05f5d3ad00ba9441"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/roanokecollege/authentication/zipball/ee6b0117921191480f174a1c05f5d3ad00ba9441",
+                "reference": "ee6b0117921191480f174a1c05f5d3ad00ba9441",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "rcwebdevelopers\\": "src/"
+                }
+            },
+            "authors": [
+                {
+                    "name": "David Crush",
+                    "email": "dlcrush@mail.roanoke.edu"
+                }
+            ],
+            "description": "An Authentication Package",
+            "support": {
+                "source": "https://github.com/roanokecollege/authentication/tree/master",
+                "issues": "https://github.com/roanokecollege/authentication/issues"
+            },
+            "time": "2020-02-20T19:10:25+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
