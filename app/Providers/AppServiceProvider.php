@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Database\Schema\Blueprint;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +14,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+
     }
 
     /**
@@ -23,6 +24,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+      Blueprint::macro('RCFields', function () {
+        $this->timestamp('created_at');
+        $this->string('created_by', 10);
+        $this->timestamp('updated_at');
+        $this->string('updated_by', 10);
+        $this->timestamp('deleted_at')->nullable();
+        $this->string('deleted_by', 10)->nullable();
+      });
     }
 }

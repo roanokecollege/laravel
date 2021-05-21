@@ -6,6 +6,7 @@ use Closure;
 use Redirect;
 use RCAuth;
 use App\User;
+use App\StripeUser;
 
 class ForceLogin
 {
@@ -21,10 +22,26 @@ class ForceLogin
       $returnRoute = Redirect::to("login")->with("returnURL", $request->fullUrl());
 
       if (RCAuth::check() || RCAuth::attempt()) {
-        $rcid = RCAuth::user()->rcid;
-        $user = User::where("RCID", $rcid)->first();
+        $rcid        = RCAuth::user()->rcid;
+        $user        = User::where("RCID", $rcid)->first();
+        $stripe_user = StripeUser::find($rcid);
+
+        if (empty($stripe_user)) {
+          $stripe_user = new StripeUser;
+          $stripe_user->rcid       = $rcid;
+          $stripe_user->created_by = $rcid;
+          $stripe_user->updated_by = $rcid;
+          $stripe_user->save();
+          $stripe_user->createAsStripeCustomer();
+        }
 
         if (!empty($user)) {
+          $request->merge(['user' => $user]);
+          $request->setUserResolver(function () use ($user) {
+            return $user;
+          });
+          $request->merge(['stripe_user' => $stripe_user]);
+
           $returnRoute = $next($request);
         }
       }

@@ -1,5 +1,5 @@
 <?php
-
+  use \Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,19 +11,42 @@
 |
 */
 
-Route::get("login", function () {
-  $returnURL = Session::get("returnURL", Request::url() . "/../");
+Route::get("login", function (Request $request) {
+  $returnURL = Session::get("returnURL", $request->url() . "/../");
   return RCAuth::redirectToLogin($returnURL);
 });
 
-Route::get("logout", function () {
+Route::get("logout", function (Request $request) {
   RCAuth::logout();
-  $returnURL = Request::url() . "/../";
+  $returnURL = $request->url() . "/../";
   return RCAuth::redirectToLogout($returnURL);
 });
 
 Route::middleware("force_login")->group(function () {
   Route::get('/', function () {
       return view('welcome');
+  })->name("home");
+
+  Route::get('/billing-portal', function (Request $request) {
+      return $request->stripe_user->redirectToBillingPortal();
+  });
+
+  Route::get("purchase/{stripe_item}", "CashierController@showItemCheckout");
+  Route::post("checkout/{stripe_item}", "CashierController@getUpdatedCheckoutButton");
+
+  Route::prefix("admin")->middleware("force_cashier_admin")->group(function () {
+    Route::get ("/",       "Admin\ProductController@index");
+    Route::get ("/create", "Admin\ProductController@create");
+    Route::post("/create", "Admin\ProductController@store");
+    Route::prefix("{item}")->group(function () {
+      Route::get   ("/",     "Admin\ProductController@show");
+      Route::delete("/",     "Admin\ProductController@destroy");
+      Route::get   ("/edit", "Admin\ProductController@edit");
+      Route::put   ("/",     "Admin\ProductController@update");
+      Route::prefix("/price")->group(function () {
+        Route::post   ("/add",    "Admin\ProductController@addPrice");
+        Route::delete ("/remove", "Admin\ProductController@removePrice");
+      });
+    });
   });
 });
