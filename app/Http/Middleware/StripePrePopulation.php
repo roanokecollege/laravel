@@ -20,6 +20,22 @@ class StripePrePopulation
       );
       $request->merge(["stripe" => $stripe]);
 
+      if (!$request->session()->has("cart")) {
+        $request->session()->put("cart", collect());
+      }
+
+      $items = $request->session()->get("cart");
+
+      $cart  = \App\Cashier\Prices::whereIn("price_id", $items->keys())
+                                  ->get()
+                                  ->map(function ($item) use ($items) {
+                                      $item->quantity = $items[$item->price_id]["quantity"];
+                                      return $item;
+                                    });
+
+      view()->share("cart_items", $cart);
+      view()->share("stripe_checkout_route", action("CashierController@redirectToCheckout"));
+
       return $next($request);
     }
 }

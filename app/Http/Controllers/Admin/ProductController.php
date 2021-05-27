@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Cashier\Items;
+use App\Cashier\Prices;
 
 class ProductController extends Controller
 {
@@ -59,7 +60,6 @@ class ProductController extends Controller
       return redirect()->action("Admin\ProductController@index")->with("danger", "Successfully deleted product.");
     }
 
-    // AJAX METHODS
     public function addPrice (Request $request, Items $item) {
       $request->validate([
         "price" => "required|numeric",
@@ -78,17 +78,20 @@ class ProductController extends Controller
       $price = new Prices;
       $price->fkey_product_id = $item->id;
       $price->price_id        = $response->id;
+      $price->price           = $request->price;
       $price->name            = $request->name;
       $price->created_by      = $price->updated_by = \RCAuth::user()->rcid;
       $price->save();
 
       //Return display entry for show page
-      return response()->json(["display" => view()->make("admin.products.partials.price_display", compact("price"))->render()]);
+      //return response()->json(["display" => view()->make("admin.products.partials.price_display", compact("price"))->render()]);
+      return redirect()->action("Admin\ProductController@show", $item);
     }
 
-    public function removePrice (Items $item, Prices $price) {
+    // AJAX METHODS
+    public function removePrice (Request $request, Items $item, Prices $price) {
       //Set inactive on Stripe
-      $request->stripe->prices->update($item->price_id, ["active" => false]);
+      $request->stripe->prices->update($price->price_id, ["active" => false]);
 
       //Soft delete locally
       $price->deleted_by = $price->updated_by = \RCAuth::user()->rcid;

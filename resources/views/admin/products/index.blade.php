@@ -8,9 +8,6 @@
   Stripe Items
 @endsection
 
-@section("javascript")
-@endsection
-
 @section("content")
   <h2>Purchasable Items in Stripe</h2>
   <a href="{{ action("Admin\ProductController@create") }}" class="btn btn-success btn-lg pull-right"><span class="far fa-plus"></span> Create Item</a>

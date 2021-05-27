@@ -28,11 +28,20 @@ Route::middleware("force_login")->group(function () {
   })->name("home");
 
   Route::get('/billing-portal', function (Request $request) {
-      return $request->stripe_user->redirectToBillingPortal();
-  });
+      return $request->stripe_user->redirectToBillingPortal(action("CashierController@index"));
+  })->name("billing_portal");
 
-  Route::get("purchase/{stripe_item}", "CashierController@showItemCheckout");
+  Route::get("items",                   "CashierController@index");
+  Route::get("purchase/{stripe_item}",  "CashierController@showItemCheckout");
   Route::post("checkout/{stripe_item}", "CashierController@getUpdatedCheckoutButton");
+  Route::get ("checkout/success",       "CashierController@displayInvoice");
+
+  Route::prefix("cart")->group(function () {
+    Route::post("/add",      "CashierController@addToCart");
+    Route::post("/remove",   "CashierController@removeFromCart");
+    Route::post("/clear",    "CashierController@clearCart");
+    Route::post("/checkout", "CashierController@redirectToCheckout");
+  });
 
   Route::prefix("admin")->middleware("force_cashier_admin")->group(function () {
     Route::get ("/",       "Admin\ProductController@index");
@@ -45,7 +54,7 @@ Route::middleware("force_login")->group(function () {
       Route::put   ("/",     "Admin\ProductController@update");
       Route::prefix("/price")->group(function () {
         Route::post   ("/add",    "Admin\ProductController@addPrice");
-        Route::delete ("/remove", "Admin\ProductController@removePrice");
+        Route::delete ("/remove/{price}", "Admin\ProductController@removePrice");
       });
     });
   });

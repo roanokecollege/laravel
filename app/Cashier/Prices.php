@@ -4,9 +4,12 @@ namespace App\Cashier;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Prices extends Model
 {
+    use SoftDeletes;
+
     public $table = "cashier.prices";
 
     protected static function boot () {
@@ -18,6 +21,6 @@ class Prices extends Model
   	}
 
     public function item () {
-      $this->belongsTo(\App\Cashier\Items::class, "id", "fkey_product_id");
+      return $this->belongsTo(\App\Cashier\Items::class, "fkey_product_id", "id");
     }
 }
