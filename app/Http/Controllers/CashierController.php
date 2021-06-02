@@ -98,10 +98,23 @@ class CashierController extends Controller
     public function displayInvoice (Request $request) {
       $session  = $request->stripe->checkout->sessions->retrieve($request->get('session_id'));
       $customer = $request->stripe->customers->retrieve($session->customer);
+      $payment  = $request->stripe->paymentIntents->retrieve($session->payment_intent);
+      $charge   = $payment->charges->first(); // We are not doing subscriptions, so there's no need to worry about multiple charges
       $purchased_items = $request->session()->get("cart"); //TODO: Change to pull
 
-      //TODO: Store the purchase information in the database, with the cart details
+      $purchase = new \App\Cashier\Purchase;
+      $purchase->populateAttributes($session->customer, $session->payment_intent, $charge->id, $charge->amount,
+                                    $charge->receipt_url, $request->stripe_user->rcid);
+      $purchase->save();
 
-      return view()->make("show_invoice", compact("session", "customer", "purchased_items"));
+      $items = collect();
+      foreach($purchased_items as $item) {
+        $purchased_item = new \App\Cashier\PurchaseItem;
+        $purchased_item->populateAttributes($purchase->id, $item['price_id'], $item['quantity'],
+                                             $request->stripe_user->rcid);
+        $purchased_item->save();
+      }
+      $purchase->load("items.price.item");
+      return view()->make("checkout.show_invoice", compact("session", "customer", "purchase", "purchased_items"));
     }
 }
