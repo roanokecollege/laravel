@@ -64,6 +64,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'force_login' => \App\Http\Middleware\ForceLogin::class,
         'force_cashier_admin' => \App\Http\Middleware\ForceCashierAdmin::class,
+        'parking_decals' => \App\Http\Middleware\ParkingDecals::class
     ];
 
     /**

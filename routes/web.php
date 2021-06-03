@@ -63,4 +63,13 @@ Route::middleware("force_login")->group(function () {
       });
     });
   });
+
+  Route::prefix("campus_safety")->middleware("force_login")->group(function () {
+    Route::prefix("decal")->group(function () {
+      Route::get ("/",          "ParkingDecalController@showForm");
+      Route::post("/request",   "ParkingDecalController@storeRequest");
+      Route::get ("/success",   "ParkingDecalController@successfulPayment");
+      Route::get ("/cancelled", "ParkingDecalController@cancelledPayment");
+    });
+  });
 });

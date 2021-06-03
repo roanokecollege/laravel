@@ -36,6 +36,7 @@ class ForceLogin
         }
 
         if (!empty($user)) {
+          app()->instance(\App\User::class, $user);
           $request->merge(['user' => $user]);
           $request->setUserResolver(function () use ($user) {
             return $user;

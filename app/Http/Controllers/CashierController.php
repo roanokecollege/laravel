@@ -81,20 +81,24 @@ class CashierController extends StripeTemplateController
       return view()->make("checkout.redirect", ['sessionId' => $session->id]);//$request->stripe->redirectToCheckout(['sessionId' => $session->id]);
     }
 
-    //
-    public function displayInvoice (Request $request) {
+    public static function storePurchase (Request $request, &$session, &$purchase) {
       $session  = $request->stripe->checkout->sessions->retrieve($request->get('session_id'));
       $customer = $request->stripe->customers->retrieve($session->customer);
       $payment  = $request->stripe->paymentIntents->retrieve($session->payment_intent);
       $charge   = $payment->charges->first(); // We are not doing subscriptions, so there's no need to worry about multiple charges
-      $purchased_items = $request->session()->get("cart"); //TODO: Change to pull
 
       $purchase = new \App\Cashier\Purchase;
       $purchase->populateAttributes($session->customer, $session->payment_intent, $charge->id, $charge->amount,
                                     $charge->receipt_url, $request->stripe_user->rcid);
       $purchase->save();
+    }
 
-      $items = collect();
+    //
+    public function displayInvoice (Request $request) {
+      $purchase = self::storePurchase($request, $session, $purchase);
+
+      $purchased_items = $request->session()->get("cart"); //TODO: Change to pull
+
       foreach($purchased_items as $item) {
         $purchased_item = new \App\Cashier\PurchaseItem;
         $purchased_item->populateAttributes($purchase->id, $item['price_id'], $item['quantity'],
