@@ -43,6 +43,11 @@ Route::middleware("force_login")->group(function () {
     Route::post("/checkout", "CashierController@redirectToCheckout");
   });
 
+  Route::prefix('purchases')->group(function () {
+    Route::get("/",           "TransactionHistoryController@index");
+    Route::get("/{purchase}", "TransactionHistoryController@show");
+  });
+
   Route::prefix("admin")->middleware("force_cashier_admin")->group(function () {
     Route::get ("/",       "Admin\ProductController@index");
     Route::get ("/create", "Admin\ProductController@create");

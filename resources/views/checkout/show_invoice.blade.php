@@ -4,19 +4,20 @@
   Purchase Receipt
 @endsection
 
-@section("javascript")
+@section("stylesheets")
   @parent
-
+  <link rel="stylesheet" type="text/css" href="{{ asset("css/dark_table.css") }}" />
 @endsection
+
 
 @section("content")
 
   <h2>Thank You!</h2>
   <p>
-    You can view your transaction receipt at <a href="{{ $purchase->receipt_url }}">{{$purchase->receipt_url}}</a>.
+    You can view your full transaction receipt <a href="{{ $purchase->receipt_url }}">via Stripe</a>.
     Your purchase details are as follows:
   </p>
-  <table class="table table-condensed">
+  <table class="table table-condensed dark_table">
     <thead>
       <tr>
         <th>Item</th>

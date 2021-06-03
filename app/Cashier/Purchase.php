@@ -3,10 +3,19 @@
 namespace App\Cashier;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Purchase extends Model
 {
     protected $table = "cashier.purchases";
+
+    protected static function boot () {
+  		parent::boot();
+
+  		static::addGlobalScope('sorted', function (Builder $builder) {
+  			$builder->orderBy("created_at", "DESC");
+  		});
+  	}
 
     public function populateAttributes ($customer_id, $payment_intent_id, $charge_id,
                                         $charge_amount, $receipt_url, $user_rcid) {

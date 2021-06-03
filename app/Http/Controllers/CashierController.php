@@ -8,23 +8,10 @@ use App\Cashier\Items;
 
 use Stripe;
 
-class CashierController extends Controller
+class CashierController extends StripeTemplateController
 {
-
-    public function __construct (Request $request) {
-      $this->stripe_user = $request->stripe_user;
-      $this->stripe      = $request->stripe;
-
-      $side_navigation = [
-        "<span class='far fa-home'></span> Home" => action("CashierController@index"),
-        "<span class='fab fa-stripe-s'></span> Stripe Dashboard" => route("billing_portal")
-      ];
-
-      view()->share("side_navigation", $side_navigation);
-    }
-
     public function index () {
-      $items = Items::orderBy("product_name")->get();
+      $items = Items::where("display", true)->orderBy("product_name")->get();
       return view()->make("products.index", compact("items"));
     }
 
@@ -115,6 +102,6 @@ class CashierController extends Controller
         $purchased_item->save();
       }
       $purchase->load("items.price.item");
-      return view()->make("checkout.show_invoice", compact("session", "customer", "purchase", "purchased_items"));
+      return view()->make("checkout.show_invoice", compact("purchase"));
     }
 }
