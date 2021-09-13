@@ -13,7 +13,8 @@
         "laravel/framework": "6.*",
         "laravel/tinker": "^2.0",
         "rcwebdevelopers/mustangbuilder": "dev-master",
-        "roanokecollege/authentication": "*"
+        "roanokecollege/authentication": "*",
+        "laravel/ui": "^2.0"
     },
     "require-dev": {
         "facade/ignition": "^1.4",
@@ -23,14 +24,14 @@
         "phpunit/phpunit": "^8.0"
     },
     "repositories": [
-      {
-        "type": "vcs",
-        "url": "git@github.com:roanokecollege/mustang_builder.git"
-      },
-      {
-        "type": "vcs",
-        "url": "git@github.com:roanokecollege/authentication.git"
-      }
+        {
+            "type": "vcs",
+            "url": "git@github.com:roanokecollege/mustang_builder.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:roanokecollege/authentication.git"
+        }
     ],
     "config": {
         "optimize-autoloader": true,
