@@ -11,19 +11,21 @@
 |
 */
 
-Route::get("login", function () {
-  $returnURL = Session::get("returnURL", Request::url() . "/../");
-  return RCAuth::redirectToLogin($returnURL);
+Route::get('login', function () {
+    $returnURL = Session::get('returnURL', Request::url().'/../');
+
+    return RCAuth::redirectToLogin($returnURL);
 });
 
-Route::get("logout", function () {
-  RCAuth::logout();
-  $returnURL = Request::url() . "/../";
-  return RCAuth::redirectToLogout($returnURL);
+Route::get('logout', function () {
+    RCAuth::logout();
+    $returnURL = Request::url().'/../';
+
+    return RCAuth::redirectToLogout($returnURL);
 });
 
-Route::middleware("force_login")->group(function () {
-  Route::get('/', function () {
-      return view('welcome');
-  });
+Route::middleware('force_login')->group(function () {
+    Route::get('/', function () {
+        return view('welcome');
+    });
 });

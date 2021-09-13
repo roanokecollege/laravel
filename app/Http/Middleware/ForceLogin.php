@@ -2,10 +2,10 @@
 
 namespace App\Http\Middleware;
 
-use Closure;
-use Redirect;
-use RCAuth;
 use App\User;
+use Closure;
+use RCAuth;
+use Redirect;
 
 class ForceLogin
 {
@@ -18,17 +18,17 @@ class ForceLogin
      */
     public function handle($request, Closure $next)
     {
-      $returnRoute = Redirect::to("login")->with("returnURL", $request->fullUrl());
+        $returnRoute = Redirect::to('login')->with('returnURL', $request->fullUrl());
 
-      if (RCAuth::check() || RCAuth::attempt()) {
-        $rcid = RCAuth::user()->rcid;
-        $user = User::where("RCID", $rcid)->first();
+        if (RCAuth::check() || RCAuth::attempt()) {
+            $rcid = RCAuth::user()->rcid;
+            $user = User::where('RCID', $rcid)->first();
 
-        if (!empty($user)) {
-          $returnRoute = $next($request);
+            if (! empty($user)) {
+                $returnRoute = $next($request);
+            }
         }
-      }
 
-      return $returnRoute;
+        return $returnRoute;
     }
 }
