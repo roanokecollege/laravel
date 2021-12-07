@@ -14,7 +14,7 @@
         "laravel/framework": "^8.75",
         "laravel/helpers": "^1.4",
         "laravel/tinker": "^2.5",
-        "laravel/ui": "^3.3",
+        "laravel/ui": "^3.4",
         "rcwebdevelopers/mustangbuilder": "dev-master",
         "roanokecollege/authentication": "*"
     },
