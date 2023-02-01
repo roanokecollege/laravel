@@ -1,5 +1,10 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SearchController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,21 +16,30 @@
 |
 */
 
-Route::get('login', function () {
-    $returnURL = Session::get('returnURL', Request::url().'/../');
+/**
+ * Login route
+ */
+Route::get('login', function() {
+    $returnURL = Session::get('returnURL', Request::url() . '/../');
 
     return RCAuth::redirectToLogin($returnURL);
-});
+})->name('login');
 
-Route::get('logout', function () {
+/**
+ * Logout route
+ */
+Route::get('logout', function() {
     RCAuth::logout();
-    $returnURL = Request::url().'/../';
-
+    $returnURL = Request::url() . '/../';
     return RCAuth::redirectToLogout($returnURL);
-});
+})->name('logout');
 
-Route::middleware('force_login')->group(function () {
-    Route::get('/', function () {
-        return view('welcome');
-    });
-});
+/**
+ * Home route
+ */
+Route::get('/', [HomeController::class, 'index']);
+
+/**
+ * Mustang Typeahead Search route
+ */
+Route::get('/search', [SearchController::class, 'typeahead']);
