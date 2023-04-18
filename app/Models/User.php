@@ -6,20 +6,25 @@ use Illuminate\Database\Eloquent\Model;
 
 class User extends Model
 {
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var string
+     */
     protected $table = 'DataMart.dbo.view_PersonBasic';
     protected $primaryKey = 'RCID';
-    protected $connection = 'sqlsrv';
-    protected $appends = ['display_name'];
     public $incrementing = false;
 
     public function getDisplayNameAttribute()
     {
-        $first_name = $this->FirstName;
+        $from_name = $this->FirstName;
 
-        if (! empty($this->Nickname)) {
-            $first_name = $this->Nickname;
+        if (isset($this->Nickname) && ! is_null($this->Nickname)) {
+            $from_name = $this->Nickname;
         }
 
-        return sprintf('%s %s', trim($first_name), trim($this->LastName));
+        $from_name .= ' '.$this->LastName;
+
+        return $from_name;
     }
 }
