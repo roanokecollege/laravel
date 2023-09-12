@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => env('DB_CONNECTION', 'sqlsrv'),
 
     /*
     |--------------------------------------------------------------------------
@@ -34,18 +34,18 @@ return [
     */
 
     'connections' => [
-
-        'sqlsrv' => [
-            'driver' => 'sqlsrv',
-            'host' => env('DB_HOST', 'localhost'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', false),
-            'password' => env('DB_PASSWORD', false),
-            'charset' => 'utf8',
-            'prefix' => '',
-            'pooling' => false,
+      'sqlsrv' => [
+        'driver' => 'sqlsrv',
+        'host' => env('DB_HOST', 'localhost'),
+        'database' => env('DB_DATABASE', 'forge'),
+        'username' => env('DB_USERNAME', false),
+        'password' => env('DB_PASSWORD', false),
+        'charset' => 'utf8',
+        'prefix' => '',
+        'pooling' => false,
+        'encrypt' => env('DB_ENCRYPT', 'yes'),
+        'trust_server_certificate' => 'true',
         ],
-
     ],
 
     /*

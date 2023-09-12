@@ -3,28 +3,24 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use \App\Models\Prefix;
 
 class User extends Model
 {
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var string
-     */
+
     protected $table = 'DataMart.dbo.view_PersonBasic';
     protected $primaryKey = 'RCID';
     public $incrementing = false;
 
-    public function getDisplayNameAttribute()
-    {
-        $from_name = $this->FirstName;
-
-        if (isset($this->Nickname) && ! is_null($this->Nickname)) {
-            $from_name = $this->Nickname;
+    public function getDisplayNameAttribute() {
+        if(isset($this->disallowed_prefix)) {
+            return $this->rc_full_name;
+        } else {
+            return $this->Prefix . ' ' . $this->rc_full_name;
         }
+    }
 
-        $from_name .= ' '.$this->LastName;
-
-        return $from_name;
+    public function disallowed_prefix() {
+        return $this->hasOne(Prefix::class, 'prefix', 'Prefix');
     }
 }

@@ -3,33 +3,32 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use RCAuth;
-use Redirect;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
-use App\Models\User;
+use RCAuth;
+use \App\Models\User;
 
 class ForceLogin
 {
     /**
      * Handle an incoming request.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \Closure $next
-     * @return mixed
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next): Response
     {
-        $returnRoute = Redirect::to('login')->with('returnURL', $request->fullUrl());
+      $returnRoute = redirect()->to('login')->with('returnURL', $request->fullUrl());
         
-        if ((RCAuth::check() || RCAuth::attempt())) {
-            $rcid = RCAuth::user()->rcid;
-            $user = User::where('RCID', $rcid)->first();
+      if ((RCAuth::check() || RCAuth::attempt())) {
+          $rcid = RCAuth::user()->rcid;
+          $user = User::where('RCID', $rcid)->first();
 
-            if (!empty($user)) {
-                $returnRoute = $next($request);
-            }
-        }
+          if (!empty($user)) {
+              $returnRoute = $next($request);
+          }
+      }
 
-        return $returnRoute;
+      return $returnRoute;
     }
 }
