@@ -26,15 +26,15 @@ $search_query->where('FirstName', 'LIKE', sprintf('%%%s%%', $term))
 });
 }
 })->get()->map(function ($user) {
-            $response_entry = collect();
-            $response_entry['id'] = $user->RCID;
-            $response_entry['display_data'] = view()->make('typeahead.typeahead', ['person' => $user])->render();
-            $response_entry['input_data'] = $user->PreferredName;
+$response_entry = collect();
+$response_entry['id'] = $user->RCID;
+$response_entry['display_data'] = view()->make('typeahead.typeahead', ['person' => $user])->render();
+$response_entry['input_data'] = $user->PreferredName;
 
-            return $response_entry;
-        });
+return $response_entry;
+});
 
-        return ['data' => $potential_users];
-    }
+return ['data' => $potential_users];
+}
 
 }
