@@ -6,7 +6,7 @@ on:
 jobs:
   linter_name:
     name: runner / phpcs
-    runs-on: [self-hosted, endstone]
+    runs-on: [self-hosted, lodestone]
     steps:
       - uses: actions/checkout@v2
       - uses: shalior/wordpress-phpcs-action@master
