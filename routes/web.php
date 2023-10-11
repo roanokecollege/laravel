@@ -19,7 +19,7 @@ use App\Http\Controllers\SearchController;
 /**
  * Login route
  */
-Route::get('login', function() {
+Route::get('login', function () {
     $returnURL = Session::get('returnURL', Request::url() . '/../');
 
     return RCAuth::redirectToLogin($returnURL);
@@ -28,7 +28,7 @@ Route::get('login', function() {
 /**
  * Logout route
  */
-Route::get('logout', function() {
+Route::get('logout', function () {
     RCAuth::logout();
     $returnURL = Request::url() . '/../';
     return RCAuth::redirectToLogout($returnURL);
