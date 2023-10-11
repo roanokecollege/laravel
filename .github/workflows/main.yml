@@ -1,5 +1,8 @@
 name: CS checker
-on: push
+on: 
+  push:
+    branches:
+      - "**"
 jobs:
   linter_name:
     name: runner / phpcs
