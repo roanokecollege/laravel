@@ -6,7 +6,7 @@ on:
 jobs:
   linter_name:
     name: runner / phpcs
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, codesniffer]
     steps:
       - uses: actions/checkout@v2
       - uses: shalior/wordpress-phpcs-action@master

@@ -114,6 +114,7 @@
     <rule ref="Squiz.WhiteSpace.ScopeKeywordSpacing"/>
     <rule ref="Squiz.WhiteSpace.SemicolonSpacing"/>
     <rule ref="Zend.Files.ClosingTag"/>
+    <rule ref="SnakeStandard.NamingConventions.EnforceSnakeCaseVariables" />
 
     <file>app</file>
     <file>config</file>

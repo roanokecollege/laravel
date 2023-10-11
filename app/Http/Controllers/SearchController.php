@@ -12,7 +12,7 @@ class SearchController extends Controller
 
     public function typeahead(Request $request) { 
         $request->validate(['search' => 'required']);
-        $search_terms = explode(' ', $request->search);
+        $searchTerms = explode(' ', $request->search);
 
         $potential_users = User::where(function ($query) use ($search_terms) {
             foreach ($search_terms as $term) {
