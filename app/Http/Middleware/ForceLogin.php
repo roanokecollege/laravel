@@ -17,8 +17,7 @@ class ForceLogin
      * @param \Closure $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
-    {
+    public function handle($request, Closure $next) {
         $returnRoute = Redirect::to('login')->with('returnURL', $request->fullUrl());
         
         if ((RCAuth::check() || RCAuth::attempt())) {
