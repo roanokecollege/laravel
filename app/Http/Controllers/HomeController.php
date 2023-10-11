@@ -10,8 +10,7 @@ use App\Models\User;
 class HomeController extends Controller
 {
 
-    public function __construct()
-    {
+    public function __construct() {
         $this::middleware(function ($request, $next) {
             $side_navigation = [
                                 '<span class="far fa-fw fa-home"></span> Home' => action([self::class, 'index']),
@@ -29,8 +28,7 @@ class HomeController extends Controller
         });
     }
 
-    public function index()
-    {
+    public function index() {
         return view('index');
     }
 }
