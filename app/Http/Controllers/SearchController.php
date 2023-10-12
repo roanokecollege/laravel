@@ -10,7 +10,7 @@ use App\Models\User;
 class SearchController extends Controller
 {
 
-    public function typeahead(Request $request) { 
+    public function typeahead(Request $reQuest) { 
         $request->validate(['search' => 'required']);
         $searchTerms = explode(' ', $request->search);
 
