@@ -10,11 +10,11 @@ use App\Models\User;
 class SearchController extends Controller
 {
 
-    public function typeahead(Request $reQuest) { 
+    public function typeahead(Request $request) { 
         $request->validate(['search' => 'required']);
         $searchTerms = explode(' ', $request->search);
 
-        $potentialUsers = User::where(function ($query) use ($search_terms) {
+        $potentialUsers = User::where(function ($query) use ($searchTerms) {
             foreach ($search_terms as $term) {
                 $query->where(function ($search_query) use ($term) {
                     $search_query->where('FirstName', 'LIKE', sprintf('%%%s%%', $term))
