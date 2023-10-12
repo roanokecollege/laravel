@@ -17,8 +17,3 @@ jobs:
       - uses: stefanzweifel/git-auto-commit-action@v4 # auto commit the fixes action for GitHub
         with:
           commit_message: Fix PHPCS errors
-  annotate:
-    name: codesniffer
-    runs-on: blackstone
-    steps:
-      - uses: tinovyatkin/action-php-codesniffer@master

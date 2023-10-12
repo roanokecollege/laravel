@@ -1,0 +1,20 @@
+name: "CI"
+
+on:
+  pull_request:
+    paths:
+      - "**.php"
+      - "phpcs.xml"
+      - ".github/workflows/phpcs.yml"
+
+jobs:
+  phpcs:
+    runs-on: blackstone
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # important!
+
+      # we may use whatever way to install phpcs, just specify the path on the next step
+      # however, curl seems to be the fastest
+      - uses: tinovyatkin/action-php-codesniffer@v1
