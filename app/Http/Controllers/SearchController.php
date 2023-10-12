@@ -26,12 +26,12 @@ class SearchController extends Controller
                 });
             }
         })->get()->map(function ($user) {
-            $response_entry = collect();
-            $response_entry['id'] = $user->RCID;
-            $response_entry['display_data'] = view()->make('typeahead.typeahead', ['person' => $user])->render();
-            $response_entry['input_data'] = $user->PreferredName;
+            $responseEntry = collect();
+            $responseEntry['id'] = $user->RCID;
+            $responseEntry['display_data'] = view()->make('typeahead.typeahead', ['person' => $user])->render();
+            $responseEntry['input_data'] = $user->PreferredName;
 
-            return $response_entry;
+            return $responseEntry;
         });
 
         return ['data' => $potential_users];
