@@ -19,9 +19,9 @@ jobs:
           commit_message: Fix PHPCS errors
   annotate:
     name: codesniffer
-    runs-on: ubuntu-latest
+    runs-on: blackstone
     steps:
-      - uses: tinovyatkin/action-php-codesniffer@v1
+      - uses: tinovyatkin/action-php-codesniffer@master
         with:
           files: "**.php" # you may customize glob as needed
           phpcs_path: php phpcs.phar
