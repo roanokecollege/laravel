@@ -34,6 +34,6 @@ class SearchController extends Controller
             return $responseEntry;
         });
 
-        return ['data' => $potential_users];
+        return ['data' => $potentialUsers];
     }
 }
