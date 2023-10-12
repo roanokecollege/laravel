@@ -9,7 +9,7 @@ jobs:
     runs-on: blackstone
     steps:
       - uses: actions/checkout@v2
-      - uses: shalior/wordpress-phpcs-action@master
+      - uses: roanokecollege/phpcs-action@master
         with:
           github_token: ${{ secrets.github_token }}
           use_default_configuration_file: true
