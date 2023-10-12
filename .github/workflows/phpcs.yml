@@ -20,3 +20,4 @@ jobs:
       - uses: tinovyatkin/action-php-codesniffer@v1
         with:
           phpcs_path: /home/github_runner/.config/composer/vendor/bin/phpcs
+          standard: phpcs.xml
