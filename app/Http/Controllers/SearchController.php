@@ -14,7 +14,7 @@ class SearchController extends Controller
         $request->validate(['search' => 'required']);
         $searchTerms = explode(' ', $request->search);
 
-        $potential_users = User::where(function ($query) use ($search_terms) {
+        $potentialUsers = User::where(function ($query) use ($search_terms) {
             foreach ($search_terms as $term) {
                 $query->where(function ($search_query) use ($term) {
                     $search_query->where('FirstName', 'LIKE', sprintf('%%%s%%', $term))
