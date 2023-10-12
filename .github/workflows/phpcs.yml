@@ -17,7 +17,7 @@ jobs:
 
       # we may use whatever way to install phpcs, just specify the path on the next step
       # however, curl seems to be the fastest
-      - uses: tinovyatkin/action-php-codesniffer@v1
+      - uses: roanokecollege/action-php-codesniffer@master
         with:
           phpcs_path: /home/github_runner/.config/composer/vendor/bin/phpcs
           standard: /home/github_runner/phpcs.xml
