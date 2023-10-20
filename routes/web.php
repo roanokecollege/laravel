@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{HomeController, SearchController};
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,18 +19,18 @@ use App\Http\Controllers\{HomeController, SearchController};
  * Login route
  */
 Route::get('login', function() {
-  $returnURL = Session::get('returnURL', Request::url() . '/../');
+    $return_url = Session::get('returnURL', Request::url() . '/../');
 
-  return RCAuth::redirectToLogin($returnURL);
+    return RCAuth::redirectToLogin($return_url);
 })->name('login');
 
 /**
 * Logout route
 */
 Route::get('logout', function() {
-  RCAuth::logout();
-  $returnURL = Request::url() . '/../';
-  return RCAuth::redirectToLogout($returnURL);
+    RCAuth::logout();
+    $return_url = Request::url() . '/../';
+    return RCAuth::redirectToLogout($return_url);
 })->name('logout');
 
 /**
