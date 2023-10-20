@@ -26,7 +26,7 @@ class ForceLogin
             if (!empty($user)) {
                 $return_route = $next($request);
             }
-        }
+      }
 
         return $return_route;
     }
