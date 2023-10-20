@@ -7,10 +7,10 @@ use RCAuth;
 
 use App\Models\User;
 
-class SearchController extends Controller {
+class SearchController extends Controller
+{
 
-    public function typeahead(Request $request)
-    {
+    public function typeahead(Request $request) { 
         $request->validate(['search' => 'required']);
         $search_terms = explode(' ', $request->search);
 
@@ -18,11 +18,11 @@ class SearchController extends Controller {
             foreach ($search_terms as $term) {
                 $query->where(function ($search_query) use ($term) {
                     $search_query->where('FirstName', 'LIKE', sprintf('%%%s%%', $term))
-                             ->orWhere('LastName', 'LIKE', sprintf('%%%s%%', $term))
-                             ->orWhere('MiddleName', 'LIKE', sprintf('%%%s%%', $term))
-                             ->orWhere('nick_name', 'LIKE', sprintf('%%%s%%', $term))
-                             ->orWhere('NickName', 'LIKE', sprintf('%%%s%%', $term))
-                             ->orWhere('RCID', 'LIKE', sprintf('%%%s%%', $term));
+                    ->orWhere('LastName', 'LIKE', sprintf('%%%s%%', $term))
+                    ->orWhere('MiddleName', 'LIKE', sprintf('%%%s%%', $term))
+                    ->orWhere('nick_name', 'LIKE', sprintf('%%%s%%', $term))
+                    ->orWhere('NickName', 'LIKE', sprintf('%%%s%%', $term))
+                    ->orWhere('RCID', 'LIKE', sprintf('%%%s%%', $term));
                 });
             }
         })->get()->map(function ($user) {
@@ -36,5 +36,4 @@ class SearchController extends Controller {
 
         return ['data' => $potential_users];
     }
-
 }

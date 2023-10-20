@@ -15,8 +15,7 @@ class User extends Model
     protected $primaryKey = 'RCID';
     public $incrementing = false;
 
-    public function getDisplayNameAttribute()
-    {
+    public function getDisplayNameAttribute() {
         $from_name = $this->FirstName;
 
         if (isset($this->Nickname) && ! is_null($this->Nickname)) {

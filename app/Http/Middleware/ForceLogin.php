@@ -17,19 +17,18 @@ class ForceLogin
      * @param \Closure $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
-    {
-        $returnRoute = Redirect::to('login')->with('returnURL', $request->fullUrl());
+    public function handle($request, Closure $next) {
+        $return_route = Redirect::to('login')->with('returnURL', $request->fullUrl());
         
         if ((RCAuth::check() || RCAuth::attempt())) {
             $rcid = RCAuth::user()->rcid;
             $user = User::where('RCID', $rcid)->first();
 
             if (!empty($user)) {
-                $returnRoute = $next($request);
+                $return_route = $next($request);
             }
         }
 
-        return $returnRoute;
+        return $return_route;
     }
 }
