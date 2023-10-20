@@ -12,9 +12,9 @@ class SearchController extends Controller
 
     public function typeahead(Request $request) { 
         $request->validate(['search' => 'required']);
-        $searchTerms = explode(' ', $request->search);
+        $search_terms = explode(' ', $request->search);
 
-        $potentialUsers = User::where(function ($query) use ($searchTerms) {
+        $potential_users = User::where(function ($query) use ($search_terms) {
             foreach ($search_terms as $term) {
                 $query->where(function ($search_query) use ($term) {
                     $search_query->where('FirstName', 'LIKE', sprintf('%%%s%%', $term))
@@ -26,14 +26,14 @@ class SearchController extends Controller
                 });
             }
         })->get()->map(function ($user) {
-            $responseEntry = collect();
-            $responseEntry['id'] = $user->RCID;
-            $responseEntry['display_data'] = view()->make('typeahead.typeahead', ['person' => $user])->render();
-            $responseEntry['input_data'] = $user->PreferredName;
+            $response_entry = collect();
+            $response_entry['id'] = $user->RCID;
+            $response_entry['display_data'] = view()->make('typeahead.typeahead', ['person' => $user])->render();
+            $response_entry['input_data'] = $user->PreferredName;
 
-            return $responseEntry;
+            return $response_entry;
         });
 
-        return ['data' => $potentialUsers];
+        return ['data' => $potential_users];
     }
 }
