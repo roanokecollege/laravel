@@ -17,7 +17,6 @@ class ForceLogin
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function handle($request, Closure $next) {
-        $return_route = redirect()->to('login')->with('returnURL', $request->fullUrl());
         
         if ((RCAuth::check() || RCAuth::attempt())) {
             $rcid = RCAuth::user()->rcid;
@@ -26,6 +25,8 @@ class ForceLogin
             if (!empty($user)) {
                 $return_route = $next($request);
             }
+        } else {
+            $return_route = redirect()->to('login')->with('returnURL', $request->fullUrl());
         }
 
         return $return_route;

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use \App\Models\User;
+use App\Models\User;
 
 class SearchController extends Controller
 {
@@ -32,5 +32,5 @@ class SearchController extends Controller
         });
 
         return ['data' => $potential_users];
-    }
+    }    
 }
