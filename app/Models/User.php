@@ -11,6 +11,7 @@ class User extends Model
     protected $table = 'DataMart.dbo.view_PersonBasic';
     protected $primaryKey = 'RCID';
     public $incrementing = false;
+    public $with = ['disallowed_prefix'];
 
     public function getDisplayNameAttribute() {
         if(isset($this->disallowed_prefix)) {
